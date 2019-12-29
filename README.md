@@ -1,2 +1,2 @@
-# awesome-k8s
+# Awesome Kubernetes
 A collection of kubernetes knowledge
