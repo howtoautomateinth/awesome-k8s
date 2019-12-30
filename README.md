@@ -57,6 +57,106 @@ A collection of kubernetes knowledge
 - Container Runtime
   - The container runtime is the software that is responsible for running containers
   - [Read more](https://github.com/howtoautomateinth/awesome-docker)
-  
+
+## Kubernetes Object 
+> A Kubernetes object is a “record of intent”–once you create the object, the Kubernetes system will constantly work to ensure that object exists. By creating an object, you’re effectively telling the Kubernetes system what you want your cluster’s workload to look like; this is your cluster’s desired state
+
+> To work with Kubernetes objects–whether to create, modify, or delete them–you’ll need to use the Kubernetes API
+
+### Object Spec and Status
+Kubernetes object includes two nested object fields
+- object spec 
+  - which you must provide, describes your desired state for the object–the characteristics that you want the object to have
+- object status
+  - describes the actual state of the object, and is supplied and updated by the Kubernetes system
+
+### Describing a Kubernetes Object
+> Most often, you provide the information to kubectl in a .yaml file. kubectl converts the information to JSON when making the API request
+
+```
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.7.9
+        ports:
+        - containerPort: 80
+```
+
+#### Name
+> Each object in your cluster has a Name that is unique for that type of resource. Every Kubernetes object also has a UID that is unique across your whole cluster
+
+#### Namespace
+> Namespaces are intended for use in environments with many users spread across multiple teams, or projects. For clusters with a few to tens of users, you should not need to create or think about namespaces at all
+
+#### Label and Selector
+> Labels are key/value pairs that are attached to objects, such as pods. Labels are intended to be used to specify identifying attributes of objects that are meaningful and relevant to users
+
+```
+"metadata": {
+  "labels": {
+    "key1" : "value1",
+    "key2" : "value2"
+  }
+}
+```
+
+> With label selector, the client/user can identify a set of objects. The label selector is the core grouping primitive in Kubernetes
+
+```
+"selector": {
+    "component" : "redis",
+}
+```
+
+#### Annotations
+> Labels can be used to select objects and to find collections of objects that satisfy certain conditions. In contrast, annotations are not used to identify and select objects.
+
+Annotations allow you to add non-identifying metadata to Kubernetes objects. Examples include phone numbers of persons responsible for the object or tool information for debugging purposes
+
+```
+"metadata": {
+  "annotations": {
+    "key1" : "value1",
+    "key2" : "value2"
+  }
+}
+```
+
+#### Field Selectors
+> Field selectors let you select Kubernetes resources based on the value of one or more resource fields
+
+```
+kubectl get pods --field-selector status.phase=Running
+```
+
+#### Recommended Labels
+> Shared labels and annotations share a common prefix: app.kubernetes.io. Labels without a prefix are private to users. The shared prefix ensures that shared labels do not interfere with custom user labels
+
+```
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app.kubernetes.io/name: mysql
+    app.kubernetes.io/instance: wordpress-abcxzy
+    app.kubernetes.io/version: "5.7.21"
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: wordpress
+    app.kubernetes.io/managed-by: helm
+```
+
 ##### Further Reading
 - [K8S by example](http://kubernetesbyexample.com/)
