@@ -33,16 +33,30 @@ A collection of kubernetes knowledge
 
 ### Master Component
 - kube-apiserver
+  - Exposes the Kubernetes API. The API server is the front end for the Kubernetes control plane.
 - etcd
+  - Consistent and highly-available key value store used as Kubernetes’ backing store for all cluster data
 - kube-scheduler
+  - Watches newly created pods that have no node assigned, and selects a node for them to run on
 - kube-controller-manager
+  - Logical 
+    - Node Controller: Responsible for noticing and responding when nodes go down
+    - Replication Controller: Responsible for maintaining the correct number of pods for every replication controller object in the system
+    - Endpoints Controller: Populates the Endpoints object (that is, joins Services & Pods)
+    - Service Account & Token Controllers: Create default accounts and API access tokens for new namespaces
 - cloud-controller-manager
+  - runs controllers that interact with the underlying cloud providers
+  - allows the cloud vendor’s code and the Kubernetes code to evolve independently of each other
 
 ### Worker Component
 - kubelet
+  - An agent that runs on each node in the cluster. It makes sure that containers are running in a pod
 - kube-proxy
+  - a network proxy that runs on each node in your cluster to maintains network rules on nodes
+  - These network rules allow network communication to your Pods from network sessions inside or outside of your cluster
 - Container Runtime
-
+  - The container runtime is the software that is responsible for running containers
+  - [Read more](https://github.com/howtoautomateinth/awesome-docker)
   
 ##### Further Reading
 - [K8S by example](http://kubernetesbyexample.com/)
