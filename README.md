@@ -27,7 +27,7 @@ A collection of kubernetes knowledge
 ## Kubernetes Component
 > When you deploy Kubernetes, you get a cluster
 
-> A cluster has at least one worker node and at least one master node
+A cluster has at least one worker node and at least one master node
 
 ![K8S Component](https://d33wubrfki0l68.cloudfront.net/817bfdd83a524fed7342e77a26df18c87266b8f4/3da7c/images/docs/components-of-kubernetes.png)
 
@@ -59,9 +59,9 @@ A collection of kubernetes knowledge
   - [Read more](https://github.com/howtoautomateinth/awesome-docker)
 
 ## Kubernetes Object 
-> A Kubernetes object is a “record of intent”–once you create the object, the Kubernetes system will constantly work to ensure that object exists. By creating an object, you’re effectively telling the Kubernetes system what you want your cluster’s workload to look like; this is your cluster’s desired state
+A Kubernetes object is a “record of intent”–once you create the object, the Kubernetes system will constantly work to ensure that object exists. By creating an object, you’re effectively telling the Kubernetes system what you want your cluster’s workload to look like; this is your cluster’s desired state
 
-> To work with Kubernetes objects–whether to create, modify, or delete them–you’ll need to use the Kubernetes API
+To work with Kubernetes objects–whether to create, modify, or delete them–you’ll need to use the Kubernetes API
 
 ### Object Spec and Status
 Kubernetes object includes two nested object fields
@@ -71,7 +71,7 @@ Kubernetes object includes two nested object fields
   - describes the actual state of the object, and is supplied and updated by the Kubernetes system
 
 ### Describing a Kubernetes Object
-> Most often, you provide the information to kubectl in a .yaml file. kubectl converts the information to JSON when making the API request
+Most often, you provide the information to kubectl in a .yaml file. kubectl converts the information to JSON when making the API request
 
 ```
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
@@ -96,13 +96,13 @@ spec:
 ```
 
 #### Name
-> Each object in your cluster has a Name that is unique for that type of resource. Every Kubernetes object also has a UID that is unique across your whole cluster
+Each object in your cluster has a Name that is unique for that type of resource. Every Kubernetes object also has a UID that is unique across your whole cluster
 
 #### Namespace
-> Namespaces are intended for use in environments with many users spread across multiple teams, or projects. For clusters with a few to tens of users, you should not need to create or think about namespaces at all
+Namespaces are intended for use in environments with many users spread across multiple teams, or projects. For clusters with a few to tens of users, you should not need to create or think about namespaces at all
 
 #### Label and Selector
-> Labels are key/value pairs that are attached to objects, such as pods. Labels are intended to be used to specify identifying attributes of objects that are meaningful and relevant to users
+Labels are key/value pairs that are attached to objects, such as pods. Labels are intended to be used to specify identifying attributes of objects that are meaningful and relevant to users
 
 ```
 "metadata": {
@@ -122,7 +122,7 @@ spec:
 ```
 
 #### Annotations
-> Labels can be used to select objects and to find collections of objects that satisfy certain conditions. In contrast, annotations are not used to identify and select objects.
+Labels can be used to select objects and to find collections of objects that satisfy certain conditions. In contrast, annotations are not used to identify and select objects.
 
 Annotations allow you to add non-identifying metadata to Kubernetes objects. Examples include phone numbers of persons responsible for the object or tool information for debugging purposes
 
@@ -136,14 +136,14 @@ Annotations allow you to add non-identifying metadata to Kubernetes objects. Exa
 ```
 
 #### Field Selectors
-> Field selectors let you select Kubernetes resources based on the value of one or more resource fields
+Field selectors let you select Kubernetes resources based on the value of one or more resource fields
 
 ```
 kubectl get pods --field-selector status.phase=Running
 ```
 
 #### Recommended Labels
-> Shared labels and annotations share a common prefix: app.kubernetes.io. Labels without a prefix are private to users. The shared prefix ensures that shared labels do not interfere with custom user labels
+Shared labels and annotations share a common prefix: app.kubernetes.io. Labels without a prefix are private to users. The shared prefix ensures that shared labels do not interfere with custom user labels
 
 ```
 apiVersion: apps/v1
