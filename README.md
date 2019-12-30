@@ -157,6 +157,11 @@ metadata:
     app.kubernetes.io/part-of: wordpress
     app.kubernetes.io/managed-by: helm
 ```
+## Workloads
+### Pods
+> A Pod represents a unit of deployment: a single instance of an application in Kubernetes, which might consist of either a single container or a small number of containers that are tightly coupled and that share resources.
+
+If you want to scale your application horizontally you should use multiple Pods, one for each instance as replication!
 
 ##### Further Reading
 - [K8S by example](http://kubernetesbyexample.com/)
