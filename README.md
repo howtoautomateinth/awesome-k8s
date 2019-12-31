@@ -24,7 +24,7 @@ A collection of kubernetes knowledge
 - Secret and configuration management
   - Lets you store and manage sensitive information, such as passwords, OAuth tokens, and SSH keys. You can deploy and update secrets and application configuration without rebuilding your container images, and without exposing secrets in your stack configuration
   
-## Kubernetes Component
+## Kubernetes Components
 > When you deploy Kubernetes, you get a cluster
 
 A cluster has at least one worker node and at least one master node
@@ -157,8 +157,9 @@ metadata:
     app.kubernetes.io/part-of: wordpress
     app.kubernetes.io/managed-by: helm
 ```
-## Workloads
-### Pods
+## Kubernetes Object Type
+### Workloads
+#### Pods
 > A Pod represents a unit of deployment: a single instance of an application in Kubernetes, which might consist of either a single container or a small number of containers that are tightly coupled and that share resources.
 
 If you want to scale your application horizontally you should use multiple Pods, one for each instance as replication!
