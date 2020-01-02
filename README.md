@@ -178,6 +178,17 @@ If you want to scale your application horizontally you should use multiple Pods,
   - All Containers in the Pod have terminated, and at least one Container has terminated in failure
 - Unknown
   - For some reason the state of the Pod could not be obtained
+  
+#### ReplicaSet
+A ReplicaSet’s purpose is to maintain a stable set of replica Pods running at any given time. As such, it is often used to guarantee the availability of a specified number of identical Pods
+
+#### ReplicationController
+A ReplicationController ensures that a specified number of pod replicas are running at any one time. In other words, a ReplicationController makes sure that a pod or a homogeneous set of pods is always up and available
+
+> A Deployment that configures a ReplicaSet is now the recommended way to set up replication.
+
+#### Deployment
+A Deployment provides declarative updates for Pods and ReplicaSets.
 
 
 ##### Further Reading
