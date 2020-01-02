@@ -160,9 +160,25 @@ metadata:
 ## Kubernetes Object Type
 ### Workloads
 #### Pods
+![Pods](https://d33wubrfki0l68.cloudfront.net/fe03f68d8ede9815184852ca2a4fd30325e5d15a/98064/docs/tutorials/kubernetes-basics/public/images/module_03_pods.svg)
+
 > A Pod represents a unit of deployment: a single instance of an application in Kubernetes, which might consist of either a single container or a small number of containers that are tightly coupled and that share resources.
 
+![Multiple Pods](https://d33wubrfki0l68.cloudfront.net/5cb72d407cbe2755e581b6de757e0d81760d5b86/a9df9/docs/tutorials/kubernetes-basics/public/images/module_03_nodes.svg)
 If you want to scale your application horizontally you should use multiple Pods, one for each instance as replication!
+
+##### Pod Lifecycle
+- Pending
+  - The Pod accepted by the K8s system, but one or more of the container images not ready yet
+- Running
+  - The Pod bound to a node, and all of the containers created
+- Succeeded
+  - All Containers in the Pod have terminated in success
+- Failed
+  - All Containers in the Pod have terminated, and at least one Container has terminated in failure
+- Unknown
+  - For some reason the state of the Pod could not be obtained
+
 
 ##### Further Reading
 - [K8S by example](http://kubernetesbyexample.com/)
