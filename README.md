@@ -190,6 +190,28 @@ A ReplicationController ensures that a specified number of pod replicas are runn
 #### Deployment
 A Deployment provides declarative updates for Pods and ReplicaSets.
 
+### Storage
+#### Persistent Volumes
+- PersistentVolume (PV)
+  - storage in the cluster that has been provisioned by an administrator or dynamically provisioned using Storage Classes
+- PersistentVolumeClaim (PVC)
+  - a request for storage by a user
+
+Persistent Volumes are provisioned in two ways, Statically or Dynamically
+- Static Volumes
+  - A static PV simply means that some k8s administrator provisioned a persistent volume in the cluster
+- Dynamic Volumes
+  - In some circumstances a pod could require a persistent volume that doesn’t exist
+
+##### Claim Policies
+- Retain
+  - When the claim is deleted, the volume remains
+- Recycle
+  - When the claim is deleted the volume remains but in a state where the data can be manually recovered
+- Delete
+  - The persistent volume is deleted when the claim is deleted
+
+
 
 ##### Further Reading
 - [K8S by example](http://kubernetesbyexample.com/)
