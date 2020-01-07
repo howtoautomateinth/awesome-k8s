@@ -200,8 +200,10 @@ A Deployment provides declarative updates for Pods and ReplicaSets.
 Persistent Volumes are provisioned in two ways, Statically or Dynamically
 - Static Volumes
   - A static PV simply means that some k8s administrator provisioned a persistent volume in the cluster
+  - In other word, we will create Persistent Volumes (PV) and Persistent Volumes Calim (PVC)
 - Dynamic Volumes
   - In some circumstances a pod could require a persistent volume that doesn’t exist
+  - In other word, we only need to have Persistent Volumes Calim (PVC)
 
 ##### Claim Policies
 - Retain
