@@ -190,6 +190,12 @@ A ReplicationController ensures that a specified number of pod replicas are runn
 #### Deployment
 A Deployment provides declarative updates for Pods and ReplicaSets.
 
+#### ConfigMap
+is a Kubernetes abstraction meant to decouple environment-dependent application-configuration-data from containerized applications, allowing them to remain portable across environments
+
+#### Secret
+is an object that contains a small amount of sensitive data such as a password, a token, or a key. Putting such sensitive information in a secret allows for more control over how it is used and reduces the risk of accidental exposure
+
 ### Storage
 #### Persistent Volumes
 - PersistentVolume (PV)
@@ -212,8 +218,10 @@ Persistent Volumes are provisioned in two ways, Statically or Dynamically
   - When the claim is deleted the volume remains but in a state where the data can be manually recovered
 - Delete
   - The persistent volume is deleted when the claim is deleted
-
-
+  
+### Services
+is an abstract way to expose an application running on a set of Pods as a network service. Since the IP address of a pod is not a reliable way to access business functionality offered by the pod. 
+The recommendation to access the pod outside the cluster is use [Ingress nginx](https://kubernetes.github.io/ingress-nginx/deploy/) with loadbalancer of Cloud provider like GKE or EKS
 
 ##### Further Reading
 - [K8S by example](http://kubernetesbyexample.com/)
