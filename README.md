@@ -223,5 +223,12 @@ Persistent Volumes are provisioned in two ways, Statically or Dynamically
 is an abstract way to expose an application running on a set of Pods as a network service. Since the IP address of a pod is not a reliable way to access business functionality offered by the pod. 
 The recommendation to access the pod outside the cluster is use [Ingress nginx](https://kubernetes.github.io/ingress-nginx/deploy/) with loadbalancer of Cloud provider like GKE or EKS
 
+#### Headless Services
+is a service with a service IP but instead of load-balancing it will return the IPs of our associated Pods. This allows us to interact directly with the Pods instead of a proxy.By set ClusterIP to NONE (Normally, you will interact with ClusterIP service that help you to redirect between Pods)
+
+#### Endpoints
+Endpoints track the IP Addresses of the objects the service send traffic to.
+In normal cases, when we're using services object with selector so it will know how to send traffic to that endpoint but without selector it won't have endpoint to send the traffic to so that is a part we can use endpoint object to redirect traffic to anywhere depend on endpoint mapping manually 
+
 ##### Further Reading
 - [K8S by example](http://kubernetesbyexample.com/)
