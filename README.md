@@ -204,6 +204,16 @@ Advantage
 - Stable, persistent storage. (using volumeClaimTemplates field it will provide stable storage using PersistentVolumes provisioned)
 - Ordered, graceful deployment and scaling.
 - Ordered, automated rolling updates.
+
+Naming
+- Hostname
+  - $(statefulset name)-$(ordinal)
+- DNS
+  - DNS
+    - $(service name).$(namespace).svc.cluster.local
+  - subdomain DNS 
+    - $(podname).$(governing service domain) from serviceName field
+
 Use cases
 - Database cluster (zookeeper,etc.)
 
