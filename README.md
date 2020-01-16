@@ -196,6 +196,17 @@ is a Kubernetes abstraction meant to decouple environment-dependent application-
 #### Secret
 is an object that contains a small amount of sensitive data such as a password, a token, or a key. Putting such sensitive information in a secret allows for more control over how it is used and reduces the risk of accidental exposure
 
+#### Stateful Set
+is the workload API object used to manage stateful applications.require a Headless Service to be responsible for the network identity of the Pods.
+
+Advantage
+- Stable, unique network identifiers.
+- Stable, persistent storage.
+- Ordered, graceful deployment and scaling.
+- Ordered, automated rolling updates.
+Use cases
+- Database cluster (zookeeper,etc.)
+
 ### Storage
 #### Persistent Volumes
 - PersistentVolume (PV)
