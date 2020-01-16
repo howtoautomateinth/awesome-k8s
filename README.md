@@ -201,7 +201,7 @@ is the workload API object used to manage stateful applications.require a Headle
 
 Advantage
 - Stable, unique network identifiers.
-- Stable, persistent storage.
+- Stable, persistent storage. (using volumeClaimTemplates field it will provide stable storage using PersistentVolumes provisioned)
 - Ordered, graceful deployment and scaling.
 - Ordered, automated rolling updates.
 Use cases
