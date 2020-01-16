@@ -207,6 +207,8 @@ Advantage
 Use cases
 - Database cluster (zookeeper,etc.)
 
+> Every replica of a stateful set will have its own state, and each of the pods will be creating its own PVC(Persistent Volume Claim). So a statefulset with 3 replicas will create 3 pods, each having its own Volume, so total 3 PVCs
+
 ### Storage
 #### Persistent Volumes
 - PersistentVolume (PV)
