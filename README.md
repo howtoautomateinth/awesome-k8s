@@ -283,6 +283,42 @@ Kube-Proxy have 3 models
   - netlink interface to create IPVS rules accordingly and synchronizes IPVS rules with Kubernetes Services and Endpoints periodically
   - based on netfilter hook function that is similar to iptables mode, but uses hash table as the underlying data structure and works in the kernel space not user space
   - lower latency than kube-proxy in iptables mode
-  
+
+### Kube-DNS
+
+> Kubernetes DNS schedules a DNS Pod and Service on the cluster, and configures the kubelets to tell individual containers to use the DNS Service’s IP to resolve DNS names
+
+kubelet sets each new pod’s /etc/resolv.conf nameserver option to the cluster IP of the kube-dns service, with appropriate search options to allow for shorter hostnames to be used
+
+```
+nameserver 10.32.0.10
+search namespace.svc.cluster.local svc.cluster.local cluster.local
+options ndots:5
+```
+
+#### Kubernetes DNS Example
+- A record
+Service
+```
+service.namespace.svc.cluster.local
+```
+Pod
+```
+actual-IP-address.namespace.pod.cluster.local
+```
+- SRV record
+```
+_my-port-name._my-port-protocol.my-svc.my-namespace.svc.cluster-domain.example
+```
+
+#### Pod's hostname and subdomain fields
+Currently when a pod is created, its hostname is the Pod’s metadata.name value.
+
+Pod spec has an optional
+- hostname
+  - When specified, it takes precedence over the Pod’s name
+- subdomain
+  - which can be used to specify its subdomain
+
 ##### Further Reading
 - [K8S by example](http://kubernetesbyexample.com/)
