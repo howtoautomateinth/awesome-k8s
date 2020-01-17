@@ -277,7 +277,7 @@ Kube-Proxy have 3 models
   - For each Service, it installs iptables rules, which capture traffic to the Service’s clusterIP and port, and redirect that traffic to one of the Service’s backend sets
   - iptables have lower traffic no need to switch between user space and kernel space
   - Prevent traffic sent to a Pod that’s known to have failed
-    - use (Pod readiness probes)[https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes]
+    - use [Pod readiness probes](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes)
 - IPVS proxy mode
   - watches Kubernetes Services and Endpoints
   - netlink interface to create IPVS rules accordingly and synchronizes IPVS rules with Kubernetes Services and Endpoints periodically
