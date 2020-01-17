@@ -322,6 +322,7 @@ Pod spec has an optional
 
 Additional Configuration Options
 - dnsConfig option
+  - with dnsPolicy set to "None"
 
 ```
 apiVersion: v1
