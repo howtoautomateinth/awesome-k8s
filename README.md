@@ -253,5 +253,36 @@ is a service with a service IP but instead of load-balancing it will return the 
 Endpoints track the IP Addresses of the objects the service send traffic to.
 In normal cases, when we're using services object with selector so it will know how to send traffic to that endpoint but without selector it won't have endpoint to send the traffic to so that is a part we can use endpoint object to redirect traffic to anywhere depend on endpoint mapping manually 
 
+## Kubernetes Networking
+### Kube-Proxy
+
+> Every node in a Kubernetes cluster runs a kube-proxy. kube-proxy is responsible for implementing a form of virtual IP for Services of type other than ExternalName
+
+Kube-proxy is the closest to the reverse proxy model
+
+As a reverse proxy, kube-proxy is responsible for watching client requests to some IP:port  and forwarding/proxying them to the corresponding service/application on the private network
+
+Kube-Proxy have 3 models
+- User space proxy mode
+  - watches the Kubernetes master for the addition and removal of Service and Endpoint objects
+  - For each Service it opens a port (randomly chosen) on the local node. Any connections to this “proxy port” is proxied to one of the Service’s backend Pods (as reported via Endpoints)
+  - 4 Steps
+    - watches addition or removal 
+    - opens a random port on the node
+    - installs iptables rules that intercept traffic to the Service’s VIP and Service Port and redirect that traffic to the host port opened
+    - kube-proxy works as a load balancer distributing traffic across the backend Pods
+  - must frequently switch context between userspace and kernelspace when it interacts with iptables and does load balancing
+- iptables proxy mode
+  - watches the Kubernetes control plane for the addition and removal of Service and Endpoint objects
+  - For each Service, it installs iptables rules, which capture traffic to the Service’s clusterIP and port, and redirect that traffic to one of the Service’s backend sets
+  - iptables have lower traffic no need to switch between user space and kernel space
+  - Prevent traffic sent to a Pod that’s known to have failed
+    - use (Pod readiness probes)[https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes]
+- IPVS proxy mode
+  - watches Kubernetes Services and Endpoints
+  - netlink interface to create IPVS rules accordingly and synchronizes IPVS rules with Kubernetes Services and Endpoints periodically
+  - based on netfilter hook function that is similar to iptables mode, but uses hash table as the underlying data structure and works in the kernel space not user space
+  - lower latency than kube-proxy in iptables mode
+  
 ##### Further Reading
 - [K8S by example](http://kubernetesbyexample.com/)
