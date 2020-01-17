@@ -320,5 +320,28 @@ Pod spec has an optional
 - subdomain
   - which can be used to specify its subdomain
 
+Additional Configuration Options
+- dnsConfig option
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: example
+  name: custom-dns
+spec:
+  containers:
+    - name: example
+      image: nginx
+  dnsPolicy: "None"
+  dnsConfig:
+    nameservers:
+      - 203.0.113.44
+    searches:
+      - custom.dns.local
+ ```
+ 
+ this config will rewrite a pod’s resolv.conf to enable the changes
+
 ##### Further Reading
 - [K8S by example](http://kubernetesbyexample.com/)
