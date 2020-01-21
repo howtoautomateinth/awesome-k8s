@@ -345,4 +345,5 @@ spec:
  this config will rewrite a pod’s resolv.conf to enable the changes
 
 ##### Further Reading
+- [Kubectl document](https://kubectl.docs.kubernetes.io/)
 - [K8S by example](http://kubernetesbyexample.com/)
