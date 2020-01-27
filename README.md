@@ -357,15 +357,21 @@ the Docker container engine redirects those two streams to a logging driver, whi
 
 ### Cluster-Level Logging
 
-> Kubernetes does not provide a native solution for cluster-level logging
+> Kubernetes does not provide a native solution for cluster-level logging but we can implement cluster-level logging by including a node-level logging agent on each node
 
-![cluster-level logging](https://d33wubrfki0l68.cloudfront.net/2585cf9757d316b9030cf36d6a4e6b8ea7eedf5a/1509f/images/docs/user-guide/logging/logging-with-node-agent.png)
-but we can implement cluster-level logging by including a node-level logging agent on each node
+#### Using a node logging agent
+
+![node-logging-agent](https://d33wubrfki0l68.cloudfront.net/2585cf9757d316b9030cf36d6a4e6b8ea7eedf5a/1509f/images/docs/user-guide/logging/logging-with-node-agent.png)
 
 Two optional logging agents are packaged with the Kubernetes release
 - [Stackdriver Logging](https://cloud.google.com/logging/)
   - for use with Google Cloud Platform
 - [Elasticsearch](https://kubernetes.io/docs/tasks/debug-application-cluster/logging-elasticsearch-kibana/)
+
+#### Using a sidecar container with the logging agent
+
+![sidecar-logging-agent](https://d33wubrfki0l68.cloudfront.net/5bde4953b3b232c97a744496aa92e3bbfadda9ce/39767/images/docs/user-guide/logging/logging-with-streaming-sidecar.png)
+
 
 ##### Further Reading
 - [Kubectl document](https://kubectl.docs.kubernetes.io/)
