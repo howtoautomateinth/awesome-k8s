@@ -344,6 +344,29 @@ spec:
  
  this config will rewrite a pod’s resolv.conf to enable the changes
 
+## Kube-Logging
+### Node-Level Logging
+
+> Node-level logging only works for applications’ standard output and standard error
+
+Everything a containerized application writes to stdout and stderr is handled and redirected somewhere by a container engine
+
+![logging](https://d33wubrfki0l68.cloudfront.net/59b1aae2adcfe4f06270b99a2789012ed64bec1f/4d0ad/images/docs/user-guide/logging/logging-node-level.png)
+
+the Docker container engine redirects those two streams to a logging driver, which is configured in Kubernetes to write to a file in json format
+
+### Cluster-Level Logging
+
+> Kubernetes does not provide a native solution for cluster-level logging
+
+![cluster-level logging](https://d33wubrfki0l68.cloudfront.net/2585cf9757d316b9030cf36d6a4e6b8ea7eedf5a/1509f/images/docs/user-guide/logging/logging-with-node-agent.png)
+but we can implement cluster-level logging by including a node-level logging agent on each node
+
+Two optional logging agents are packaged with the Kubernetes release
+- [Stackdriver Logging](https://cloud.google.com/logging/)
+  - for use with Google Cloud Platform
+- [Elasticsearch](https://kubernetes.io/docs/tasks/debug-application-cluster/logging-elasticsearch-kibana/)
+
 ##### Further Reading
 - [Kubectl document](https://kubectl.docs.kubernetes.io/)
 - [K8S by example](http://kubernetesbyexample.com/)
