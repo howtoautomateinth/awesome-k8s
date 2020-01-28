@@ -345,33 +345,77 @@ spec:
  this config will rewrite a pod’s resolv.conf to enable the changes
 
 ## Kube-Logging
+
+##### Jargon First
+- [Sidecar pattern](https://docs.microsoft.com/en-us/azure/architecture/patterns/sidecar)
+  - sidecar attached to a motorcycle
+  - the sidecar is attached to a parent application and provides supporting features for the application. The sidecar also shares the same lifecycle as the parent application, being created and retired alongside the parent
+
+### Container-Level Logging
+
+> Logging containers is to write to the standard output (stdout) and standard error (stderr) streams
+
 ### Node-Level Logging
 
-> Node-level logging only works for applications’ standard output and standard error
-
-Everything a containerized application writes to stdout and stderr is handled and redirected somewhere by a container engine
+> When a container running on Kubernetes writes its logs to stdout or stderr streams, the container engine streams them to the logging driver configured in Kubernetes
 
 ![logging](https://d33wubrfki0l68.cloudfront.net/59b1aae2adcfe4f06270b99a2789012ed64bec1f/4d0ad/images/docs/user-guide/logging/logging-node-level.png)
 
-the Docker container engine redirects those two streams to a logging driver, which is configured in Kubernetes to write to a file in json format
+- node-level logging is implementing log rotation, so that logs don’t consume all available storage on the node
+
+#### System component logs
+two types of system components
+- run in a container
+  - The Kubernetes scheduler and kube-proxy run in a container
+- not run in a container
+  - The kubelet and container runtime
+
+Most case write to .log files in the /var/log directory
 
 ### Cluster-Level Logging
 
 > Kubernetes does not provide a native solution for cluster-level logging but we can implement cluster-level logging by including a node-level logging agent on each node
 
+Three options that we can manage cluster-level logging
+- Use a node-level logging agent that runs on every node.
+- Include a dedicated sidecar container for logging in an application pod.
+- Push logs directly to a backend from within an application
+
 #### Using a node logging agent
 
 ![node-logging-agent](https://d33wubrfki0l68.cloudfront.net/2585cf9757d316b9030cf36d6a4e6b8ea7eedf5a/1509f/images/docs/user-guide/logging/logging-with-node-agent.png)
+
+By including a node-level logging agent on each node implement it as DaemonSet replica
 
 Two optional logging agents are packaged with the Kubernetes release
 - [Stackdriver Logging](https://cloud.google.com/logging/)
   - for use with Google Cloud Platform
 - [Elasticsearch](https://kubernetes.io/docs/tasks/debug-application-cluster/logging-elasticsearch-kibana/)
 
+Both use fluentd with custom configuration as an agent on the node
+
 #### Using a sidecar container with the logging agent
 
-![sidecar-logging-agent](https://d33wubrfki0l68.cloudfront.net/5bde4953b3b232c97a744496aa92e3bbfadda9ce/39767/images/docs/user-guide/logging/logging-with-streaming-sidecar.png)
+- The sidecar container streams application logs to its own stdout
+- The sidecar container runs a logging agent, which is configured to pick up logs from an application container
 
+##### Streaming sidecar container
+
+![streaming-sidecar-logging-agent](https://d33wubrfki0l68.cloudfront.net/5bde4953b3b232c97a744496aa92e3bbfadda9ce/39767/images/docs/user-guide/logging/logging-with-streaming-sidecar.png)
+
+allows you to separate several log streams from different parts of your application, some of which can lack support for writing to stdout or stderr
+
+##### Sidecar container with a logging agent
+
+![sidecar-loggiing-agent](https://d33wubrfki0l68.cloudfront.net/d55c404912a21223392e7d1a5a1741bda283f3df/c0397/images/docs/user-guide/logging/logging-with-sidecar-agent.png)
+
+*Using a logging agent in a sidecar container can lead to significant resource consumption. Moreover, you won’t be able to access those logs using kubectl logs command, because they are not controlled by the kubelet.*
+
+### Exposing logs directly from the application
+
+![exposing](https://d33wubrfki0l68.cloudfront.net/0b4444914e56a3049a54c16b44f1a6619c0b198e/260e4/images/docs/user-guide/logging/logging-from-application.png)
+
+pushing logs directly from every application
 
 ##### Further Reading
 - [Kubectl document](https://kubectl.docs.kubernetes.io/)
