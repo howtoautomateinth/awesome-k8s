@@ -219,6 +219,63 @@ Use cases
 
 > Every replica of a stateful set will have its own state, and each of the pods will be creating its own PVC(Persistent Volume Claim). So a statefulset with 3 replicas will create 3 pods, each having its own Volume, so total 3 PVCs
 
+#### DaemonSets
+ 
+ > ensures that all (or some) Nodes run a copy of a Pod
+
+Typical uses of a DaemonSet
+- a daemon for cluster *storage* on each node
+  - glusterd
+  - ceph
+- a daemon for *logs collections* on each node
+  - fluentd
+  - logstash
+- a daemon for *node monitoring* on ever node
+  - collectd
+  
+```
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: simple-daemonset
+  labels:
+    app: simple-daemonset
+spec:
+  selector:
+    matchLabels:
+      app: simple-daemonset
+  template:
+    metadata:
+      labels:
+        app: simple-daemonset
+```
+
+##### DaemonSet Scheduled
+
+> Normal Pods waiting to be scheduled are created and in Pending state, but DaemonSet pods are not created in Pending state but it will focus on [Pod preemption](https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/)
+
+- DaemonSet controller
+  - Specific by .spec.nodeName
+- Deafult scheduler
+  - Specific by .nodeAffinity
+
+##### Taints and Tolerations
+
+> Taints and tolerations work together to ensure that pods are not scheduled onto inappropriate nodes
+
+Example
+
+```
+kubectl taint nodes node1 key=value:NoSchedule
+```
+places a taint on node node1. The taint has key key, value value, and taint effect NoSchedule. This means that no pod will be able to schedule onto node1 unless it has a matching toleration.
+
+###### DaemonSet Selector
+- spec.template.spec.nodeSelector
+   - used to run on only a subset of the nodes that match the selector
+- spec.template.spec.affinity
+  - can be used to run on only a subset of the nodes that match the affinity
+
 ### Storage
 #### Persistent Volumes
 - PersistentVolume (PV)
