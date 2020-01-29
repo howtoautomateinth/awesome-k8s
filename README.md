@@ -233,23 +233,6 @@ Typical uses of a DaemonSet
 - a daemon for *node monitoring* on ever node
   - collectd
   
-```
-apiVersion: apps/v1
-kind: DaemonSet
-metadata:
-  name: simple-daemonset
-  labels:
-    app: simple-daemonset
-spec:
-  selector:
-    matchLabels:
-      app: simple-daemonset
-  template:
-    metadata:
-      labels:
-        app: simple-daemonset
-```
-
 ##### DaemonSet Scheduled
 
 > Normal Pods waiting to be scheduled are created and in Pending state, but DaemonSet pods are not created in Pending state but it will focus on [Pod preemption](https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/)
@@ -275,6 +258,39 @@ places a taint on node node1. The taint has key key, value value, and taint effe
    - used to run on only a subset of the nodes that match the selector
 - spec.template.spec.affinity
   - can be used to run on only a subset of the nodes that match the affinity
+
+###### Example DaemonSet Object
+
+```
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: simple-daemonset
+  labels:
+    app: simple-daemonset
+spec:
+  selector:
+    matchLabels:
+      app: simple-daemonset
+  template:
+    metadata:
+      labels:
+        app: simple-daemonset
+    spec:
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      containers:
+      - name: busybox
+        image: busybox
+        args:
+        - sleep
+        - "10000"
+```
+*spec.selctor* a selector for pods managed by the DaemonSet
+*spec.template* a pod definition for the pod you’d like to run on all nodes
+*spec.template.spec.nodeSelector* can be used to run on only a subset of the nodes that match the selector
+*spec.template.spec.affinity* can be used to run on only a subset of the nodes that match the affinity
 
 ### Storage
 #### Persistent Volumes
